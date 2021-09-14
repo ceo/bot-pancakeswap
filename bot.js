@@ -104,14 +104,15 @@ const run = async () => {
     console.log('ready to buy');
     try{
 
-
       initialLiquidityDetected = true;
+      
+      let amount = data.WBNB_CHUNKS_OF > 0 ? data.WBNB_CHUNKS_OF : data.AMOUNT_OF_WBNB
 
       for (let i = 0; i < data.AMOUNT_OF_WBNB/data.WBNB_CHUNKS_OF; i++) {
 
       let amountOutMin = 0;
       //We buy x amount of the new token for our wbnb
-      const amountIn = ethers.utils.parseUnits(`${data.AMOUNT_OF_WBNB}`, 'ether');
+      const amountIn = ethers.utils.parseUnits(`${amount}`, 'ether');
       if ( parseInt(data.Slippage) !== 0 ){
         const amounts = await router.getAmountsOut(amountIn, [tokenIn, tokenOut]);
         //Our execution price will be a bit different, we need some flexbility
