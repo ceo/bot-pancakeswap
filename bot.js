@@ -86,7 +86,7 @@ const run = async () => {
     console.log(`value BNB : ${jmlBnb}`);
 
     if(jmlBnb > data.minBnb){
-        setTimeout(() => buyAction(), 3000);
+        setTimeout(() => buyAction(), 2000);
     }
     else{
         initialLiquidityDetected = false;
@@ -103,7 +103,11 @@ const run = async () => {
 
     console.log('ready to buy');
     try{
+
+
       initialLiquidityDetected = true;
+
+      for (let i = 0; i < data.AMOUNT_OF_WBNB/data.WBNB_CHUNKS_OF; i++) {
 
       let amountOutMin = 0;
       //We buy x amount of the new token for our wbnb
@@ -115,7 +119,7 @@ const run = async () => {
       }
 
       console.log(
-       chalk.green.inverse(`Start to buy \n`)
+       chalk.green.inverse(`Start to buy [${i} of ${data.AMOUNT_OF_WBNB/data.WBNB_CHUNKS_OF}] \n`)
         +
         `Buying Token
         =================
@@ -147,7 +151,12 @@ const run = async () => {
 
       const receipt = await tx.wait();
       console.log(`Transaction receipt : https://www.bscscan.com/tx/${receipt.logs[1].transactionHash}`);
-      setTimeout(() => {process.exit()},2000);
+      
+    }
+
+    setTimeout(() => {process.exit()},2000);
+
+
     }catch(err){
       let error = JSON.parse(JSON.stringify(err));
         console.log(`Error caused by : 
